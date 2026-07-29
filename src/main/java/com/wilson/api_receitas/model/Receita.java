@@ -29,6 +29,8 @@ public class Receita {
 
     private String categoria;
 
+    private String origem;
+
     @Column(columnDefinition = "TEXT")
     private String instrucoes;
 
@@ -40,11 +42,12 @@ public class Receita {
     private List<String> ingredientes;
 
     public Receita(String externalId, String nomeOriginal, String nomeTraduzido, String categoria, String instrucoes,
-                   String imagemUrl, List<String> ingredientes) {
+                   String origem, String imagemUrl, List<String> ingredientes) {
         this.externalId = externalId;
         this.nomeOriginal = nomeOriginal;
         this.nomeTraduzido = nomeTraduzido;
         this.categoria = categoria;
+        this.origem = origem;
         this.instrucoes = instrucoes;
         this.imagemUrl = imagemUrl;
         this.ingredientes = ingredientes;
