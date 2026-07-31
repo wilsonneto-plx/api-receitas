@@ -1,6 +1,9 @@
 package com.wilson.api_receitas.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.wilson.api_receitas.model.Receita;
+
+import java.util.List;
 
 public record MealDTO(
 
@@ -56,4 +59,20 @@ public record MealDTO(
         String strIngredient11
 
 ) {
+
+        public Receita toEntity(String nomePtBr, String categoriaPtBr,
+                                String instrucoesPtBr, List<String> ingredientesPtBr) {
+
+                return new Receita(
+                        this.idMeal(),
+                        this.strMeal(),
+                        nomePtBr,
+                        categoriaPtBr,
+                        this.strCountry(),
+                        instrucoesPtBr,
+                        this.strMealThumb(),
+                        ingredientesPtBr
+                );
+
+        }
 }
