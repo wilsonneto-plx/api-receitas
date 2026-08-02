@@ -34,15 +34,17 @@ public class Receita {
     @Column(columnDefinition = "TEXT")
     private String instrucoes;
 
+    @Column(length = 500)
     private String imagemUrl;
 
     @ElementCollection
     @CollectionTable(name = "tb_receitas_ingredientes", joinColumns = @JoinColumn(name = "receita_id"))
-    @Column(name = "ingrediente")
+    @Column(name = "ingrediente", columnDefinition = "TEXT")
     private List<String> ingredientes;
 
-    public Receita(String externalId, String nomeOriginal, String nomeTraduzido, String categoria, String instrucoes,
-                   String origem, String imagemUrl, List<String> ingredientes) {
+    public Receita(String externalId, String nomeOriginal, String nomeTraduzido, String categoria, String origem,
+                   String instrucoes, String imagemUrl, List<String> ingredientes) {
+
         this.externalId = externalId;
         this.nomeOriginal = nomeOriginal;
         this.nomeTraduzido = nomeTraduzido;
