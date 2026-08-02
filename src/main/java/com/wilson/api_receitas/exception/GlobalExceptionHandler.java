@@ -1,0 +1,44 @@
+package com.wilson.api_receitas.exception;
+
+import jakarta.persistence.EntityNotFoundException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.time.LocalDateTime;
+
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<ResponseError> tratarErro404 (EntityNotFoundException ex) {
+
+        String mensagem = ex.getMessage() != null ? ex.getMessage() : "Recurso não encontrado no banco.";
+
+        ResponseError response = new ResponseError(
+                mensagem,
+                HttpStatus.NOT_FOUND,
+                LocalDateTime.now()
+        );
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ResponseError> generalExceptions (Exception ex) {
+
+        ex.printStackTrace();
+
+        ResponseError response = new ResponseError (
+                "Ocorreu um erro interno inesperado no servidor.",
+                HttpStatus.INTERNAL_SERVER_ERROR,
+                LocalDateTime.now()
+        );
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+    }
+
+
+}
