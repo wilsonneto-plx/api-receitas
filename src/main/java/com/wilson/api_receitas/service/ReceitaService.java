@@ -7,6 +7,7 @@ import com.wilson.api_receitas.dto.ReceitaResponseDTO;
 import com.wilson.api_receitas.dto.TheMealDbResponseDTO;
 import com.wilson.api_receitas.model.Receita;
 import com.wilson.api_receitas.repository.ReceitaRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,7 +36,7 @@ public class ReceitaService {
         TheMealDbResponseDTO response = receitaApiClient.buscarReceita(nomeReceitaEn);
 
         if (response == null || response.meals() == null || response.meals().isEmpty()) {
-            throw new RuntimeException("Receita não encontrada. 😥");
+            throw new EntityNotFoundException("Receita não encontrada. 😥");
         }
 
         MealDTO mealDTO = response.meals().get(0);
@@ -73,6 +74,12 @@ public class ReceitaService {
 
     }
 
+    public List<ReceitaResponseDTO> listarReceitas() {
+
+        return repository.findAll().stream()
+                .map(ReceitaResponseDTO::new).toList();
+
+    }
 
 
     private List<String> extrairIngredientes(MealDTO mealDTO) {
@@ -100,8 +107,5 @@ public class ReceitaService {
         }
 
     }
-
-
-
 
 }
