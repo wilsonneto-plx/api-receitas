@@ -9,6 +9,8 @@ import com.wilson.api_receitas.model.Receita;
 import com.wilson.api_receitas.repository.ReceitaRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -74,10 +76,10 @@ public class ReceitaService {
 
     }
 
-    public List<ReceitaResponseDTO> listarReceitas() {
+    public Page<ReceitaResponseDTO> listarReceitas(Pageable pageable) {
 
-        return repository.findAll().stream()
-                .map(ReceitaResponseDTO::new).toList();
+        return repository.findAll(pageable)
+                .map(ReceitaResponseDTO::new);
 
     }
 
