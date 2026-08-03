@@ -1,16 +1,15 @@
 package com.wilson.api_receitas.controller;
 
+import com.wilson.api_receitas.dto.ReceitaRequestDTO;
 import com.wilson.api_receitas.dto.ReceitaResponseDTO;
 import com.wilson.api_receitas.service.ReceitaService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -30,7 +29,7 @@ public class ReceitaController {
     }
 
     @GetMapping
-        public ResponseEntity <Page<ReceitaResponseDTO>> listarReceitas(
+    public ResponseEntity <Page<ReceitaResponseDTO>> listarReceitas(
             @PageableDefault(size = 10, page = 0, sort = "nomeTraduzido") Pageable pageable
             ) {
 
@@ -40,5 +39,31 @@ public class ReceitaController {
 
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ReceitaResponseDTO> buscarPorId(@PathVariable Long id) {
+
+        ReceitaResponseDTO response = service.buscarPorId(id);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletarReceita(@PathVariable Long id) {
+
+        service.deletarReceita(id);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ReceitaResponseDTO> atualizarReceita(
+            @PathVariable Long id,
+            @RequestBody @Valid ReceitaRequestDTO dto) {
+
+        ReceitaResponseDTO receitaAtualziada = service.atualizarReceita(id, dto);
+
+        return ResponseEntity.ok(receitaAtualziada);
+
+    }
 
 }

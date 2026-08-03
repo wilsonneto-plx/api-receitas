@@ -54,4 +54,9 @@ public class Receita {
         this.imagemUrl = imagemUrl;
         this.ingredientes = ingredientes;
     }
+
+    public void atualizar(String nomeTraduzido, String categoria) {
+        if(nomeTraduzido != null) { this.nomeTraduzido = nomeTraduzido;}
+        if(categoria !=null) { this.categoria = categoria;}
+    }
 }

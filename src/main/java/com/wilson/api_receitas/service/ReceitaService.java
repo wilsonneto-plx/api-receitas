@@ -3,6 +3,7 @@ package com.wilson.api_receitas.service;
 import com.wilson.api_receitas.client.ReceitaApiClient;
 import com.wilson.api_receitas.client.TranslationApiClient;
 import com.wilson.api_receitas.dto.MealDTO;
+import com.wilson.api_receitas.dto.ReceitaRequestDTO;
 import com.wilson.api_receitas.dto.ReceitaResponseDTO;
 import com.wilson.api_receitas.dto.TheMealDbResponseDTO;
 import com.wilson.api_receitas.model.Receita;
@@ -82,6 +83,42 @@ public class ReceitaService {
                 .map(ReceitaResponseDTO::new);
 
     }
+
+    public ReceitaResponseDTO buscarPorId(Long id) {
+
+        Receita receita = repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Não foi encontrado receita com o ID " + id +
+                        " no banco de dados." ));
+
+        return new ReceitaResponseDTO(receita);
+    }
+
+    public void deletarReceita(Long id) {
+
+        if (!repository.existsById(id)) {
+            throw new EntityNotFoundException("Não é possível deletar. Receita com o ID " + id + " não encontrada.");
+        }
+
+        repository.deleteById(id);
+
+    }
+
+    @Transactional
+    public ReceitaResponseDTO atualizarReceita(Long id, ReceitaRequestDTO dto) {
+
+        Receita receita = repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Não foi encontrado receita com o ID " + id +
+                        " no banco de dados."));
+
+        receita.atualizar(dto.nomeTraduzido(), dto.categoria());
+
+        repository.save(receita);
+
+        return new ReceitaResponseDTO(receita);
+
+    }
+
+
 
 
     private List<String> extrairIngredientes(MealDTO mealDTO) {
