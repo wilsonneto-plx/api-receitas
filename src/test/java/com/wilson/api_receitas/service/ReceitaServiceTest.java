@@ -1,4 +1,4 @@
-package com.wilson.api_receitas;
+package com.wilson.api_receitas.service;
 
 import com.wilson.api_receitas.client.ReceitaApiClient;
 import com.wilson.api_receitas.client.TranslationApiClient;
@@ -8,7 +8,6 @@ import com.wilson.api_receitas.dto.ReceitaResponseDTO;
 import com.wilson.api_receitas.dto.TheMealDbResponseDTO;
 import com.wilson.api_receitas.model.Receita;
 import com.wilson.api_receitas.repository.ReceitaRepository;
-import com.wilson.api_receitas.service.ReceitaService;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
