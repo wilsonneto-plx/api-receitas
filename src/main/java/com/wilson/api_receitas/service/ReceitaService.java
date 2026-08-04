@@ -71,9 +71,9 @@ public class ReceitaService {
                 instrucoesTraduzidas,
                 ingredientesTraduzidos);
 
-        repository.save(novaReceita);
+        Receita receitaSalvaNoBanco = repository.save(novaReceita);
 
-        return new ReceitaResponseDTO(novaReceita);
+        return new ReceitaResponseDTO(receitaSalvaNoBanco);
 
     }
 
@@ -112,14 +112,11 @@ public class ReceitaService {
 
         receita.atualizar(dto.nomeTraduzido(), dto.categoria());
 
-        repository.save(receita);
+        Receita receitaAtualizada = repository.save(receita);
 
-        return new ReceitaResponseDTO(receita);
+        return new ReceitaResponseDTO(receitaAtualizada);
 
     }
-
-
-
 
     private List<String> extrairIngredientes(MealDTO mealDTO) {
 
@@ -127,14 +124,15 @@ public class ReceitaService {
 
         adicionarSeValido(ingredientes, mealDTO.strIngredient1());
         adicionarSeValido(ingredientes, mealDTO.strIngredient2());
-        adicionarSeValido(ingredientes,mealDTO.strIngredient4());
-        adicionarSeValido(ingredientes,mealDTO.strIngredient5());
-        adicionarSeValido(ingredientes,mealDTO.strIngredient6());
-        adicionarSeValido(ingredientes,mealDTO.strIngredient7());
-        adicionarSeValido(ingredientes,mealDTO.strIngredient8());
-        adicionarSeValido(ingredientes,mealDTO.strIngredient9());
-        adicionarSeValido(ingredientes,mealDTO.strIngredient10());
-        adicionarSeValido(ingredientes,mealDTO.strIngredient11());
+        adicionarSeValido(ingredientes, mealDTO.strIngredient3());
+        adicionarSeValido(ingredientes, mealDTO.strIngredient4());
+        adicionarSeValido(ingredientes, mealDTO.strIngredient5());
+        adicionarSeValido(ingredientes, mealDTO.strIngredient6());
+        adicionarSeValido(ingredientes, mealDTO.strIngredient7());
+        adicionarSeValido(ingredientes, mealDTO.strIngredient8());
+        adicionarSeValido(ingredientes, mealDTO.strIngredient9());
+        adicionarSeValido(ingredientes, mealDTO.strIngredient10());
+        adicionarSeValido(ingredientes, mealDTO.strIngredient11());
 
         return ingredientes;
     }
@@ -146,5 +144,4 @@ public class ReceitaService {
         }
 
     }
-
 }
