@@ -21,10 +21,12 @@ public class GeminiTranslationClientImpl implements TranslationApiClient {
                         "Traduza o seguinte texto culinário do %s para o %s. " +
                         "Regras: " +
                         "1. Traduza o texto mantendo ESTRITAMENTE o mesmo número de elementos e preservando os" +
-                        " separadores '|' exatamente onde estão. Não adicione vírgula, ou pontuações extras. " +
-                        "2. Adapte medidas imperiais (oz, lb, etc) para o sistema métrico (gramas, ml). " +
-                        "3. Adapte termos culinários para o vocabulário comum brasileiro. " +
-                        "4. Responda APENAS com o texto traduzido, sem explicações adicionais.\n\n" +
+                        " separadores '|' exatamente onde estão." +
+                        "2. Retorne o texto traduzido formatado com parágrafos e quebras de linha reais," +
+                        " sem utilizar barras de escape como \n literais." +
+                        "3. Adapte medidas imperiais (oz, lb, etc) para o sistema métrico (gramas, ml). " +
+                        "4. Adapte termos culinários para o vocabulário comum brasileiro. " +
+                        "5. Responda APENAS com o texto traduzido, sem explicações adicionais.\n\n" +
                         "Texto original: %s",
                 idiomaOrigem, idiomaDestino, texto
         );

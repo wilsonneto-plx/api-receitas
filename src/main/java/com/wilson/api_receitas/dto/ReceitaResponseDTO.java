@@ -10,7 +10,7 @@ public record ReceitaResponseDTO(
         String nome,
         String categoria,
         String origem,
-        String instrucoes,
+        List<String> instrucoes,
         String imagemUrl,
         List<String> ingredientes
 
@@ -21,7 +21,10 @@ public record ReceitaResponseDTO(
                 receita.getNomeTraduzido(),
                 receita.getCategoria(),
                 receita.getOrigem(),
-                receita.getInstrucoes(),
+
+                receita.getInstrucoes() != null ? List.of(receita.getInstrucoes().split("\n+"))
+                        : List.of(),
+
                 receita.getImagemUrl(),
                 receita.getIngredientes()
 

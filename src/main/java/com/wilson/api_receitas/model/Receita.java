@@ -50,7 +50,11 @@ public class Receita {
         this.nomeTraduzido = nomeTraduzido;
         this.categoria = categoria;
         this.origem = origem;
-        this.instrucoes = instrucoes;
+
+        if (instrucoes!= null) {
+            this.instrucoes = instrucoes.replace("\\n", "\n");
+
+        }
         this.imagemUrl = imagemUrl;
         this.ingredientes = ingredientes;
     }
