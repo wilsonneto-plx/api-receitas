@@ -65,5 +65,4 @@ public class ReceitaController {
         return ResponseEntity.ok(receitaAtualziada);
 
     }
-
 }
