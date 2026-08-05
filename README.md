@@ -109,6 +109,9 @@ A aplicação está estruturada nos seguintes pacotes:
 ├── 📂 client
 │   └── Interfaces de integração externa (Spring Cloud OpenFeign/TheMealDB e Gemini)
 │
+├── 📂 config
+│   └── Configurações da documentação Swagger/OpenAPI
+│
 ├── 📂 controller
 │   └── Responsável pelos endpoints REST e gerenciamento das requisições HTTP
 │
