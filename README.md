@@ -14,6 +14,7 @@ API RESTful inteligente que une o poder da IA generativa do **Gemini** com o cat
   <img src="https://img.shields.io/badge/Maven-C71A36?style=for-the-badge&logo=apachemaven&logoColor=white" />
   <img src="https://img.shields.io/badge/JUnit_5-25A162?style=for-the-badge&logo=junit5&logoColor=white" />
   <img src="https://img.shields.io/badge/Mockito-78A641?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=swagger&logoColor=black" />
 </p>
 
 </div>
@@ -92,6 +93,7 @@ A **Receitas AI API** resolve a barreira do idioma na busca por receitas interna
 - **Validação:** Jakarta Bean Validation
 - **Testes Automatizados:** JUnit 5, Mockito, MockMvc
 - **Boilerplate:** Lombok
+- **Documentação de API:** Swagger (Springdoc OpenAPI)
 
 ---
 
@@ -165,6 +167,8 @@ Para rodar a suíte de testes localmente, execute o comando abaixo no terminal, 
 ```bash
 ./mvnw test
 ```
+Nota para usuários Windows: Se estiver utilizando o Prompt de Comando (CMD) ou PowerShell, utilize mvnw test ou .\mvnw test.
+
 ## 🚀 Como Executar o Projeto
 
 ### Pré-requisitos
@@ -200,4 +204,23 @@ Por questões de segurança, o projeto utiliza variáveis de ambiente para as cr
    ```
 4. **A API iniciará na porta 8080 e estará disponível para receber requisições em: http://localhost:8080/api/receitas**   
 
+---
+
+## 📄 Documentação da API (Swagger)
+
+O projeto conta com a documentação automatizada e interativa fornecida pelo **Swagger UI**. 
+
+Após iniciar a aplicação, você pode visualizar todos os endpoints, os schemas de requisição/resposta (DTOs) e testar a API diretamente pelo navegador acessando:
+
+🔗 **[http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)**
+
+---
+
+<div align="center">
+
+Desenvolvido por **Wilson de Andrade Veloso Neto**
+
+⭐ Se este projeto foi útil para você, considere deixar uma estrela no repositório!
+
+</div>
 
