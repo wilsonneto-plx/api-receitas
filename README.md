@@ -76,7 +76,7 @@ A **Receitas AI API** resolve a barreira do idioma na busca por receitas interna
 - **Busca e Tradução Inteligente:** Integração bidirecional com IA utilizando prompts contextualizados.
 - **Persistência com PostgreSQL (Cache):** Salvamento automático das receitas no banco de dados para evitar chamadas redundantes a APIs externas e garantir alta performance.
 - **Tratamento Estruturado de Dados:** Formatação inteligente de ingredientes (separados por `|`) e instruções.
-- **CRUD Completo:** Listagem paginada, busca por ID, atualização parcial e exclusão de receitas salvas.
+- **CRUD Completo:** Listagem paginada, busca por ID, atualização de dados e exclusão de receitas salvas.
 - **Tratamento Global de Exceções:** Retornos padronizados via `@RestControllerAdvice` para erros 400 (validação), 404 (não encontrado) e 500 (erro interno).
 - **Segurança e Configuração:** Utilização de variáveis de ambiente para proteção de chaves de API (Gemini) e credenciais do banco de dados.
 
@@ -191,7 +191,7 @@ O prefixo base da API é `/api/receitas`.
 | `GET` | `/buscar?nome={nome}` | Busca, traduz, persiste e retorna uma receita pelo nome em português. |
 | `GET` | `/` | Lista todas as receitas salvas no banco (suporta paginação `?page=0&size=10`).  |
 | `GET` | `/{id}` | Retorna os detalhes de uma receita salva específica pelo seu ID. |
-| `PUT` | `/{id}` | Atualiza o nome traduzido e/ou a categoria de uma receita existente. |
+| `PUT` | `/{id}` | Atualiza os dados editáveis de uma receita existente. |
 | `DELETE`| `/{id}` | Exclui uma receita do banco de dados pelo seu ID. |
 
 ---
@@ -213,17 +213,17 @@ GET /api/receitas/buscar?nome=lasanha
 
 ```text
 Lasanha (PT-BR)
-        |
-        v
+      |
+      v
 Gemini AI → Lasagna (EN)
-        |
-        v
+      |
+      v
 TheMealDB API
-        |
-        v
+      |
+      v
 Gemini AI → Tradução + adaptação culinária
-        |
-        v
+      |
+      v
 PostgreSQL
 ```
 
@@ -234,27 +234,20 @@ Caso a receita já esteja salva no banco de dados, a aplicação retorna os dado
 ```json
 {
   "id": 1,
-  "nome": "Lasanha",
-  "categoria": "Massas",
+  "nome": "Lasanha Vegana",
+  "categoria": "Vegano",
   "origem": "Itália",
   "instrucoes": [
     "Prepare o molho de tomate.",
-    "Monte as camadas da lasanha alternando massa, molho e queijo.",
+    "Monte as camadas da lasanha alternando massa, molho e vegetais.",
     "Leve ao forno até dourar."
   ],
   "imagemUrl": "https://www.themealdb.com/images/media/meals/rvxxuy1468312893.jpg",
   "ingredientes": [
-    "lentilhas verdes e vermelhas",
+    "Lentilhas",
     "Cenouras",
-    "cebola",
-    "abobrinha",
-    "coentro",
-    "espinafre",
-    "massa de lasanha",
-    "manteiga vegana",
-    "farinha de trigo",
-    "leite de soja",
-    "mostarda"
+    "Espinafre",
+    "Massa de lasanha"
   ]
 }
 
@@ -375,7 +368,7 @@ Por questões de segurança, o projeto utiliza variáveis de ambiente para as cr
 - `DB_PASSWORDPOST`: Senha do PostgreSQL
 - `GEMINI_API_KEY`: Sua chave de API do Gemini
 
-> **Nota:** A aplicação já está configurada nativamente para utilizar a base URL do Gemini (`gemini-3.5-flash`) através do adaptador OpenAI do Spring AI. A URL do TheMealDB também já está configurada por padrão.
+> **Nota:** A aplicação utiliza a API compatível com OpenAI do Google Gemini através do Spring AI. O modelo configurado atualmente é o `gemini-3.5-flash`. A URL da API do TheMealDB também já está configurada por padrão.
 
 ### Passo a Passo
 
