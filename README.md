@@ -74,12 +74,21 @@ A **Receitas AI API** resolve a barreira do idioma na busca por receitas interna
 ### ✨ Principais Funcionalidades
 
 - **Busca e Tradução Inteligente:** Integração bidirecional com IA utilizando prompts contextualizados.
-- **Persistência com PostgreSQL (Cache):** Salvamento automático das receitas no banco de dados para evitar chamadas redundantes a APIs externas e garantir alta performance.
-- **Tratamento Estruturado de Dados:** Formatação inteligente de ingredientes (separados por `|`) e instruções.
+- **Adaptação do Conteúdo:** Tradução das receitas para português, conversão de medidas para o sistema métrico e adaptação de termos culinários utilizando IA.
+- **Persistência de Receitas:** Armazenamento automático das receitas consultadas no PostgreSQL para reutilização futura.
 - **CRUD Completo:** Listagem paginada, busca por ID, atualização de dados e exclusão de receitas salvas.
-- **Tratamento Global de Exceções:** Retornos padronizados via `@RestControllerAdvice` para erros 400 (validação), 404 (não encontrado) e 500 (erro interno).
-- **Segurança e Configuração:** Utilização de variáveis de ambiente para proteção de chaves de API (Gemini) e credenciais do banco de dados.
+- **Documentação Interativa:** Endpoints documentados e testáveis através do Swagger UI.
+---
 
+## 🚀 Diferenciais Técnicos
+
+- **Integração com IA Generativa:** Utilização do Spring AI com Google Gemini para tradução contextual de receitas e adaptação do conteúdo para o português brasileiro.
+- **Orquestração de Serviços:** Fluxo integrado entre IA, API externa (TheMealDB) e banco de dados, centralizado na camada de serviço.
+- **Cache Persistente:** Receitas traduzidas são armazenadas no PostgreSQL para reduzir chamadas externas, melhorar o desempenho e economizar requisições à IA.
+- **Arquitetura em Camadas:** Separação de responsabilidades entre Controller, Service, Repository, DTOs e Clients, facilitando manutenção e evolução da aplicação.
+- **Tratamento Global de Exceções:** Respostas padronizadas para erros de validação, recursos não encontrados e falhas internas utilizando `@RestControllerAdvice`.
+- **Testes Automatizados:** Cobertura das camadas de Controller e Service com JUnit 5, Mockito e MockMvc.
+- **Segurança:** Utilização de variáveis de ambiente para proteger credenciais da aplicação.
 ---
 
 ## 🛠️ Tecnologias Utilizadas
@@ -362,10 +371,10 @@ Antes de começar, você precisará ter instalado na sua máquina:
 ### Configuração de Ambiente
 Por questões de segurança, o projeto utiliza variáveis de ambiente para as credenciais do banco de dados e da inteligência artificial. Antes de rodar a aplicação, configure as seguintes variáveis no seu sistema ou na sua IDE:
 
-- `DB_HOSTPOST`: Host e porta do banco (ex: `localhost:5432`)
-- `DB_NAMEPOST`: Nome do banco de dados (ex: `receitas_db`)
-- `DB_USERPOST`: Usuário do PostgreSQL (ex: `postgres`)
-- `DB_PASSWORDPOST`: Senha do PostgreSQL
+- `DB_HOST`: Host e porta do banco (ex: `localhost:5432`)
+- `DB_NAME`: Nome do banco de dados (ex: `receitas_db`)
+- `DB_USER`: Usuário do PostgreSQL (ex: `postgres`)
+- `DB_PASSWORD`: Senha do PostgreSQL
 - `GEMINI_API_KEY`: Sua chave de API do Gemini
 
 > **Nota:** A aplicação utiliza a API compatível com OpenAI do Google Gemini através do Spring AI. O modelo configurado atualmente é o `gemini-3.5-flash`. A URL da API do TheMealDB também já está configurada por padrão.
