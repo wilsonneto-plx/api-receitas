@@ -85,15 +85,15 @@ A **Receitas AI API** resolve a barreira do idioma na busca por receitas interna
 ## 🛠️ Tecnologias Utilizadas
 
 - **Linguagem:** Java 17+
-- **Framework:** Spring Boot 3+
+- **Framework e Módulos:** Spring Boot 3+ (Spring Web, Spring Boot DevTools)
 - **Integração de APIs:** Spring Cloud OpenFeign
 - **Inteligência Artificial:** Spring AI (Google Gemini)
 - **Banco de Dados:** PostgreSQL
 - **Persistência:** Spring Data JPA / Hibernate
-- **Validação:** Jakarta Bean Validation
+- **Validação:** Spring Validation (Jakarta Bean Validation)
 - **Testes Automatizados:** JUnit 5, Mockito, MockMvc
 - **Boilerplate:** Lombok
-- **Documentação de API:** Swagger (Springdoc OpenAPI)
+- **Documentação e Testes de API:** Swagger (Springdoc OpenAPI) e Postman
 
 ---
 
@@ -104,10 +104,12 @@ O projeto foi desenvolvido seguindo uma **arquitetura em camadas**, buscando uma
 A aplicação está estruturada nos seguintes pacotes:
 
 ```text
-📦 src/main/java/com/wilson/api_receitas
+📦 src/main/java/com.wilson.api_receitas
 │
 ├── 📂 client
-│   └── Interfaces de integração externa (Spring Cloud OpenFeign/TheMealDB e Gemini)
+│   ├── 📂 impl
+│   │   └── Implementações concretas dos clientes (ex: orquestração e Prompt Engineering com Gemini via Spring AI)
+│   └── Contratos e interfaces de integração externa (Spring Cloud OpenFeign para o TheMealDB)
 │
 ├── 📂 config
 │   └── Configurações da documentação Swagger/OpenAPI
@@ -122,7 +124,7 @@ A aplicação está estruturada nos seguintes pacotes:
 │   └── Gerenciamento e tratamento global das exceções da aplicação
 │
 ├── 📂 model
-│   └── Contém as entidades JPA que representam os dados persistidos
+│   └── Contém a entidade JPA que representa os dados persistidos
 │
 ├── 📂 repository
 │   └── Responsável pela comunicação com o banco de dados através do Spring Data JPA
@@ -136,7 +138,7 @@ Os testes automatizados estão organizados separadamente em:
 
 ```text
 
-📦 src/test/java/com/wilson/api_receitas
+📦 src/test/java/com.wilson.api_receitas
 │
 ├── 📂 controller
 │   └── Testes dos endpoints REST utilizando MockMvc e validação de rotas HTTP
@@ -144,6 +146,40 @@ Os testes automatizados estão organizados separadamente em:
 └── 📂 service
     └── Testes unitários das regras de negócio utilizando JUnit 5 e Mockito
 ```
+---
+## 🔄 Fluxo da Aplicação
+
+A aplicação utiliza uma arquitetura baseada em camadas, onde o serviço principal
+atua como orquestrador entre a inteligência artificial, API externa e banco de dados.
+
+```mermaid
+flowchart TD
+
+    A[👤 Usuário] --> B[ReceitaController]
+
+    B --> C[ReceitaService]
+
+    C --> D{Receita existe no banco?}
+
+    D -->|Sim| E[Retorna receita do PostgreSQL]
+
+    D -->|Não| F[Gemini AI]
+
+    F --> G[Tradução PT-BR → Inglês]
+
+    G --> H[TheMealDB API]
+
+    H --> I[Dados da receita]
+
+    I --> J[Gemini AI]
+
+    J --> K[Tradução + Conversão de medidas + Adaptação culinária]
+
+    K --> L[Salvar receita no PostgreSQL]
+
+    L --> M[Retornar resposta]
+
+ ```
 ---
 
 ## 🌐 Endpoints da API
@@ -153,7 +189,7 @@ O prefixo base da API é `/api/receitas`.
 | Método | Rota | Descrição |
 | :--- | :--- | :--- |
 | `GET` | `/buscar?nome={nome}` | Busca, traduz, persiste e retorna uma receita pelo nome em português. |
-| `GET` | `/` | Lista todas as receitas salvas no banco (suporta paginação `?page=0&size=10`). |
+| `GET` | `/` | Lista todas as receitas salvas no banco (suporta paginação `?page=0&size=10`).  |
 | `GET` | `/{id}` | Retorna os detalhes de uma receita salva específica pelo seu ID. |
 | `PUT` | `/{id}` | Atualiza o nome traduzido e/ou a categoria de uma receita existente. |
 | `DELETE`| `/{id}` | Exclui uma receita do banco de dados pelo seu ID. |
