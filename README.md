@@ -194,6 +194,156 @@ O prefixo base da API é `/api/receitas`.
 | `PUT` | `/{id}` | Atualiza o nome traduzido e/ou a categoria de uma receita existente. |
 | `DELETE`| `/{id}` | Exclui uma receita do banco de dados pelo seu ID. |
 
+---
+## 📌 Exemplos de Uso
+
+### 🔎 Buscar receita por nome
+
+A busca pode ser realizada utilizando o nome da receita em português.
+A aplicação realiza automaticamente a tradução, consulta externa,
+adaptação dos dados e persistência no banco.
+
+**Requisição:**
+
+```http
+GET /api/receitas/buscar?nome=lasanha
+```
+
+**Fluxo Interno:**
+
+```text
+Lasanha (PT-BR)
+        |
+        v
+Gemini AI → Lasagna (EN)
+        |
+        v
+TheMealDB API
+        |
+        v
+Gemini AI → Tradução + adaptação culinária
+        |
+        v
+PostgreSQL
+```
+
+Caso a receita já esteja salva no banco de dados, a aplicação retorna os dados armazenados localmente, evitando novas chamadas ao Gemini e ao TheMealDB.
+
+**Resposta**
+
+```json
+{
+  "id": 1,
+  "nome": "Lasanha",
+  "categoria": "Massas",
+  "origem": "Itália",
+  "instrucoes": [
+    "Prepare o molho de tomate.",
+    "Monte as camadas da lasanha alternando massa, molho e queijo.",
+    "Leve ao forno até dourar."
+  ],
+  "imagemUrl": "https://www.themealdb.com/images/media/meals/rvxxuy1468312893.jpg",
+  "ingredientes": [
+    "lentilhas verdes e vermelhas",
+    "Cenouras",
+    "cebola",
+    "abobrinha",
+    "coentro",
+    "espinafre",
+    "massa de lasanha",
+    "manteiga vegana",
+    "farinha de trigo",
+    "leite de soja",
+    "mostarda"
+  ]
+}
+
+```
+
+### 📚 Listar receitas salvas
+
+**Requisição:**
+
+```http
+GET /api/receitas?page=0&size=10
+```
+**Resposta:**
+
+```json
+{
+  "content": [
+    {
+      "id": 5,
+      "nome": "Bolo de Chocolate Vegano",
+      "categoria": "Vegano",
+      "origem": "Estados Unidos",
+      "instrucoes": [
+        "Misture os ingredientes secos e líquidos até obter uma massa homogênea.",
+        "Asse por 45 minutos a 180 °C."
+      ],
+      "imagemUrl": "https://www.themealdb.com/images/media/meals/qxutws1486978099.jpg",
+      "ingredientes": [
+        "Farinha de trigo com fermento",
+        "Açúcar de coco",
+        "Cacau em pó",
+        "Leite de amêndoas"
+      ]
+    },
+    {
+      "id": 6,
+      "nome": "Lasanha Vegana",
+      "categoria": "Vegano",
+      "origem": "Itália",
+      "instrucoes": [
+        "Preaqueça o forno a 180 °C.",
+        "Monte a lasanha e asse por aproximadamente 25 minutos."
+      ],
+      "imagemUrl": "https://www.themealdb.com/images/media/meals/rvxxuy1468312893.jpg",
+      "ingredientes": [
+        "Lentilhas",
+        "Cenouras",
+        "Espinafre",
+        "Massa de lasanha"
+      ]
+    }
+  ],
+  "pageable": {
+    "pageNumber": 0,
+    "pageSize": 10
+  },
+  "totalElements": 2,
+  "totalPages": 1,
+  "last": true
+}
+```
+
+### ❌ Exemplo de erro de validação
+
+**Resposta :**
+
+```json
+[
+  {
+    "campo": "nomeTraduzido",
+    "mensagem": "O nome da receita é obrigatório e não pode ficar em branco."
+  }
+]
+```
+
+### ❌ Receita inexistente
+
+**Resposta HTTP 404:**
+
+```json
+{
+  "message": "Não foi encontrado receita com o ID 100 no banco de dados.",
+  "httpStatus": "404 NOT_FOUND",
+  "time": "06/08/2026 00:48:20"
+}
+```
+
+---
+
 ## 🧪 Testes Automatizados
 
 O projeto possui uma suíte de testes robusta que garante a confiabilidade das regras de negócio e das rotas HTTP, sem depender de conexões reais com o banco ou consumo de cotas de APIs externas.
