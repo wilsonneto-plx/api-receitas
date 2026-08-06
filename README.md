@@ -399,9 +399,14 @@ Por questões de segurança, o projeto utiliza variáveis de ambiente para as cr
 
 O projeto conta com a documentação automatizada e interativa fornecida pelo **Swagger UI**. 
 
-Após iniciar a aplicação, você pode visualizar todos os endpoints, os schemas de requisição/resposta (DTOs) e testar a API diretamente pelo navegador acessando:
+Após iniciar a aplicação, você pode visualizar todos os endpoints:
 
-🔗 **[http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)**
+### Interface Swagger
+
+A API possui documentação interativa utilizando Swagger UI,
+permitindo visualizar endpoints, modelos de dados e realizar testes diretamente pelo navegador.
+
+![Swagger UI](./docs/swagger.png)
 
 ---
 
