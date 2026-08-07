@@ -5,6 +5,7 @@ import com.wilson.api_receitas.dto.ReceitaResponseDTO;
 import com.wilson.api_receitas.service.ReceitaService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -15,10 +16,11 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/receitas")
 @RequiredArgsConstructor
-public class ReceitaController {
+public class ReceitaController implements ReceitaControllerOpenApi{
 
     private final ReceitaService service;
 
+    @Override
     @GetMapping("/buscar")
     public ResponseEntity<ReceitaResponseDTO> buscarReceita(@RequestParam("nome") String nomeReceita) {
 
@@ -28,8 +30,10 @@ public class ReceitaController {
 
     }
 
+    @Override
     @GetMapping
     public ResponseEntity <Page<ReceitaResponseDTO>> listarReceitas(
+            @ParameterObject
             @PageableDefault(size = 10, page = 0, sort = "nomeTraduzido") Pageable pageable
             ) {
 
@@ -39,6 +43,7 @@ public class ReceitaController {
 
     }
 
+    @Override
     @GetMapping("/{id}")
     public ResponseEntity<ReceitaResponseDTO> buscarPorId(@PathVariable Long id) {
 
@@ -47,6 +52,7 @@ public class ReceitaController {
         return ResponseEntity.ok(response);
     }
 
+    @Override
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarReceita(@PathVariable Long id) {
 
@@ -55,6 +61,7 @@ public class ReceitaController {
         return ResponseEntity.noContent().build();
     }
 
+    @Override
     @PutMapping("/{id}")
     public ResponseEntity<ReceitaResponseDTO> atualizarReceita(
             @PathVariable Long id,
