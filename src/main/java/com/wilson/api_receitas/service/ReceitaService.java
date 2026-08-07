@@ -57,17 +57,22 @@ public class ReceitaService {
         String categoriaTraduzida = translationApiClient
                 .traduzirEAdaptar(mealDTO.strCategory(),"en","pt-br");
 
+        String origemTraduzida = translationApiClient
+                .traduzirEAdaptar(mealDTO.strCountry(),"en","pt-br");
+
         String instrucoesTraduzidas = translationApiClient
                 .traduzirEAdaptar(mealDTO.strInstructions(),"en","pt-br");
 
         List<String> ingredientesOriginais = extrairIngredientes(mealDTO);
         String ingredientesTexto = String.join(" | ", ingredientesOriginais);
-        String ingredientesTraduzidosTexto = translationApiClient.traduzirEAdaptar(ingredientesTexto, "en", "pt-br");
+        String ingredientesTraduzidosTexto = translationApiClient.traduzirEAdaptar(ingredientesTexto, "en",
+                "pt-br");
         List<String> ingredientesTraduzidos = Arrays.asList(ingredientesTraduzidosTexto.split(" \\| "));
 
         Receita novaReceita = mealDTO.toEntity(
                 nomeTraduzido,
                 categoriaTraduzida,
+                origemTraduzida,
                 instrucoesTraduzidas,
                 ingredientesTraduzidos);
 

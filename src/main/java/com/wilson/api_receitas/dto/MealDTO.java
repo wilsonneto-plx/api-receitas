@@ -60,7 +60,7 @@ public record MealDTO(
 
 ) {
 
-        public Receita toEntity(String nomePtBr, String categoriaPtBr,
+        public Receita toEntity(String nomePtBr, String categoriaPtBr, String origemPtBr,
                                 String instrucoesPtBr, List<String> ingredientesPtBr) {
 
                 return new Receita(
@@ -68,7 +68,7 @@ public record MealDTO(
                         this.strMeal(),
                         nomePtBr,
                         categoriaPtBr,
-                        this.strCountry(),
+                        origemPtBr,
                         instrucoesPtBr,
                         this.strMealThumb(),
                         ingredientesPtBr
