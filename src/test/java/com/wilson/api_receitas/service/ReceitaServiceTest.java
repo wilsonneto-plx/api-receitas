@@ -290,21 +290,6 @@ public class ReceitaServiceTest {
         then(repository).should(never()).save(any(Receita.class));
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     private MealDTO criarMealDtoMock() {
         return new MealDTO(
                 "123",
@@ -332,5 +317,4 @@ public class ReceitaServiceTest {
                 List.of("leite", "ovo")
         );
     }
-
 }

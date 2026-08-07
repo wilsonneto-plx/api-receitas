@@ -221,5 +221,4 @@ public class ReceitaControllerTest {
                 List.of("leite", "ovo", "farinha")
         );
     }
-
 }
