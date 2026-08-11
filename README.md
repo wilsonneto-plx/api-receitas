@@ -6,6 +6,7 @@ API RESTful inteligente que une o poder da IA generativa do **Gemini** com o cat
 
 <p>
   <img src="https://img.shields.io/badge/Java-17-orange?style=for-the-badge&logo=openjdk&logoColor=white" />
+  <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" />
   <img src="https://img.shields.io/badge/Spring_Boot-3.x-6DB33F?style=for-the-badge&logo=springboot&logoColor=white" />
   <img src="https://img.shields.io/badge/Spring_Cloud_Feign-blue?style=for-the-badge" />
   <img src="https://img.shields.io/badge/Spring_AI_Gemini-purple?style=for-the-badge" />
@@ -84,6 +85,7 @@ A **Receitas AI API** resolve a barreira do idioma na busca por receitas interna
 
 - **Integração com IA Generativa:** Utilização do Spring AI com Google Gemini para tradução contextual de receitas e adaptação do conteúdo para o português brasileiro.
 - **Orquestração de Serviços:** Fluxo integrado entre IA, API externa (TheMealDB) e banco de dados, centralizado na camada de serviço.
+- **Conteinerização (Docker):** Aplicação e banco de dados orquestrados via Docker Compose para execução com um único comando, garantindo o mesmo comportamento em qualquer ambiente.
 - **Cache Persistente:** Receitas traduzidas são armazenadas no PostgreSQL para reduzir chamadas externas, melhorar o desempenho e economizar requisições à IA.
 - **Arquitetura em Camadas:** Separação de responsabilidades entre Controller, Service, Repository, DTOs e Clients, facilitando manutenção e evolução da aplicação.
 - **Tratamento Global de Exceções:** Respostas padronizadas para erros de validação, recursos não encontrados e falhas internas utilizando `@RestControllerAdvice`.
@@ -98,6 +100,7 @@ A **Receitas AI API** resolve a barreira do idioma na busca por receitas interna
 - **Integração de APIs:** Spring Cloud OpenFeign
 - **Inteligência Artificial:** Spring AI (Google Gemini)
 - **Banco de Dados:** PostgreSQL
+- **Infraestrutura e DevOps:** Docker e Docker Compose
 - **Persistência:** Spring Data JPA / Hibernate
 - **Validação:** Spring Validation (Jakarta Bean Validation)
 - **Testes Automatizados:** JUnit 5, Mockito, MockMvc
@@ -362,13 +365,49 @@ Nota para usuários Windows: Se estiver utilizando o Prompt de Comando (CMD) ou 
 
 ## 🚀 Como Executar o Projeto
 
-### Pré-requisitos
-Antes de começar, você precisará ter instalado na sua máquina:
+### Opção 1: Executando com Docker (Recomendado) 🐳
+
+A maneira mais fácil de rodar a aplicação, sem precisar instalar o Java ou o PostgreSQL na sua máquina.
+
+**Pré-requisitos:**
+- Docker e Docker Compose instalados.
+- Chave de API válida do Google Gemini.
+
+**Passo a Passo:**
+
+1. **Clone o repositório e acesse a pasta:**
+```bash
+git clone https://github.com/wilsonneto-plx/api-receitas.git
+cd api-receitas
+```
+2. **Exporte a sua chave do Gemini para o terminal:**
+- Linux/Mac:
+```bash
+export GEMINI_API_KEY="sua_chave_aqui"
+```
+- Windows (PowerShell):
+```bash
+$env:GEMINI_API_KEY="sua_chave_aqui"
+```
+- Windows (CMD):
+```bash
+set GEMINI_API_KEY=sua_chave_aqui
+```
+3. **Inicie a aplicação e o banco de dados:**
+```bash
+docker-compose up --build
+```
+
+### Opção 2: Executando Localmente (Sem Docker)
+
+Caso prefira rodar a aplicação manualmente na sua máquina.
+
+**Pré-requisitos:**
 - Java 17 ou superior.
 - **PostgreSQL** (rodando localmente ou em nuvem).
 - Chave de API válida do **Google Gemini**.
 
-### Configuração de Ambiente
+**Configuração de Ambiente:**
 Por questões de segurança, o projeto utiliza variáveis de ambiente para as credenciais do banco de dados e da inteligência artificial. Antes de rodar a aplicação, configure as seguintes variáveis no seu sistema ou na sua IDE:
 
 - `DB_HOST`: Host e porta do banco (ex: `localhost:5432`)
@@ -379,7 +418,7 @@ Por questões de segurança, o projeto utiliza variáveis de ambiente para as cr
 
 > **Nota:** A aplicação utiliza a API compatível com OpenAI do Google Gemini através do Spring AI. O modelo configurado atualmente é o `gemini-3.5-flash`. A URL da API do TheMealDB também já está configurada por padrão.
 
-### Passo a Passo
+**Passo a Passo:**
 
 1. **Clone o repositório:**
    ```bash
