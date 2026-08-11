@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+
+  db:
+    image: postgres:15-alpine
+    container_name: receitas-db
+    restart: always
+    environment:
+      POSTGRES_DB: receitas_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgrespassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+
+  api:
+    build: .
+    container_name: receitas-api
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - "8080:8080"
+    environment:
+      - DB_HOST=db:5432
+      - DB_NAME=receitas_db
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=postgrespassword
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+
+
+volumes:
+  postgres_data:
